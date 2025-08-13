@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffc0cb;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        h1 {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 36px;
+            color: #ff3366;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            max-width: 90%;
+            width: 500px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .text-area {
+            flex: 1;
+            text-align: left;
+        }
+        img {
+            width: 120px;
+            height: auto;
+            border-radius: 10px;
+        }
+        .buttons {
+            margin-top: 10px;
+        }
+        button {
+            background-color: #ff4f70;
+            border: none;
+            padding: 8px 16px;
+            color: white;
+            font-size: 16px;
+            margin: 5px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>💖 A Special Question for My Cutie 💖</h1>
+
+<div class="container">
+    <div class="text-area">
+        <p id="question"></p>
+        <div class="buttons" id="buttons"></div>
+    </div>
+    <img id="questionImage" src="" alt="" style="display:none;">
+</div>
+
+<script>
+    const questions = [
+        { 
+            text: "Hey cutu 😚 How are you today?", 
+            img: "{{ url_for('static', filename='images/q1.jpg') }}", 
+            buttons: ["Next"] 
+        },
+        { 
+            text: "Guess what? I have something for you 💌", 
+            img: "{{ url_for('static', filename='images/q2.jpg') }}", 
+            buttons: ["Next"] 
+        },
+        { 
+            text: "So... do you accept the DATE on 14th Aug? 💖", 
+            img: null, 
+            buttons: ["Accept", "Decline"] 
+        },
+        { 
+            text: "Yay! 🎉 See you on 14th Aug 💕", 
+            img: "{{ url_for('static', filename='images/final.jpg') }}", 
+            buttons: [] 
+        }
+    ];
+
+    let currentQuestion = 0;
+
+    function loadQuestion(index) {
+        const question = questions[index];
+        document.getElementById("question").textContent = question.text;
+        
+        const imgEl = document.getElementById("questionImage");
+        if (question.img) {
+            imgEl.src = question.img;
+            imgEl.style.display = "block";
+        } else {
+            imgEl.style.display = "none";
+        }
+
+        const btnContainer = document.getElementById("buttons");
+        btnContainer.innerHTML = "";
+        question.buttons.forEach(btnText => {
+            const btn = document.createElement("button");
+            btn.textContent = btnText;
+            btn.onclick = () => handleButton(btnText);
+            btnContainer.appendChild(btn);
+        });
+    }
+
+    function handleButton(action) {
+        if (action === "Next") {
+            currentQuestion++;
+            loadQuestion(currentQuestion);
+        } else if (action === "Accept") {
+            currentQuestion = 3; // Go to final message
+            loadQuestion(currentQuestion);
+        } else if (action === "Decline") {
+            alert("Oh no! 😢");
+        }
+    }
+
+    // Start
+    loadQuestion(currentQuestion);
+</script>
+
+</body>
+</html>
