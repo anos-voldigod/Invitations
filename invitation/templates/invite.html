@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Invitation</title>
     <style>
         body {
@@ -68,7 +68,7 @@
         <p id="question"></p>
         <div class="buttons" id="buttons"></div>
     </div>
-    <img id="questionImage" src="" alt="" style="display:none;">
+    <img id="questionImage" src="" alt="" style="display:none;" />
 </div>
 
 <script>
@@ -127,7 +127,14 @@
             currentQuestion = 3; // Go to final message
             loadQuestion(currentQuestion);
         } else if (action === "Decline") {
-            alert("Oh no! 😢");
+            // Show custom decline message with final image, no popup
+            document.getElementById("question").textContent = "Sorry cutu, you don't have any option. You have to come! 💕";
+            const imgEl = document.getElementById("questionImage");
+            imgEl.src = "{{ url_for('static', filename='images/final.jpg') }}"; // same final image
+            imgEl.style.display = "block";
+            
+            // Remove buttons since no options now
+            document.getElementById("buttons").innerHTML = "";
         }
     }
 
